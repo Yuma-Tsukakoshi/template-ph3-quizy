@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,8 +18,7 @@
     <link rel="stylesheet" href="{{asset('/assets/css/common.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/css/font.css')}}">
     <script src="{{asset('/assets/js/common.js')}}" defer></script>
-    <script src="{{asset('/assets/js/quiz3.js')}}" defer></script>
-    {{-- asset はpublicフォルダを参照 --}}
+    <script src="{{asset('/assets/js/quiz.js')}}" defer></script>
 </head>
 
 <body class="antialiased">
@@ -42,8 +40,6 @@
             </div>
         @endif
 
-        
-
         <header id="js-header" class="l-header p-header">
             <div class="p-header__logo"><img src="{{asset('/assets/img/logo.svg')}}" alt="POSSE"></div>
             <button class="p-header__button" id="js-headerButton"></button>
@@ -54,7 +50,7 @@
                             <a href="./" class="p-header__nav__item__link">POSSEとは</a>
                         </li>
                         <li class="p-header__nav__item">
-                            <a href="../quiz/" class="p-header__nav__item__link">クイズ</a>
+                            <a href="." class="p-header__nav__item__link">クイズ</a>
                         </li>
                     </ul>
                 </nav>
@@ -86,7 +82,6 @@
         </header>
         <!-- /.l-header .p-header -->
 
-
         <main class="l-main">
             <section class="p-hero p-quiz-hero">
                 <div class="l-container">
@@ -97,30 +92,27 @@
                 </div>
             </section>
             <!-- /.p-hero .p-quiz-hero -->
-
-            {{-- laravelの展開 --}}
-            {{$question}}
-
             <div class="p-quiz-container l-container">
-                <section class="p-quiz-box js-quiz" data-quiz="0">
+                @foreach($questions as $question)
+                <section class="p-quiz-box js-quiz" data-quiz="{{$loop->index}}">
                     <div class="p-quiz-box__question">
                         <h2 class="p-quiz-box__question__title">
-                            <span class="p-quiz-box__label">Q1</span>
-                            <span class="p-quiz-box__question__title__text">問題文</span>
+                        <span class="p-quiz-box__label">Q{{$loop->iteration}}</span>
+                            <span class="p-quiz-box__question__title__text">{{$question->content}}</span>
                         </h2>
                         <figure class="p-quiz-box__question__image">
-                            <img src="{{asset('assets/img/img-quiz01.png')}}" alt="">
+                            <img src="{{asset('/assets/img/'.$question->image)}}" alt="">
                         </figure>
                     </div>
                     <div class="p-quiz-box__answer">
                         <span class="p-quiz-box__label p-quiz-box__label--accent">A</span>
                         <ul class="p-quiz-box__answer__list">
-                            <li class="p-quiz-box__answer__item">
-                                <button class="p-quiz-box__answer__button js-answer" data-answer="1"
-                                    data-correct="0">
-                                    <i class="u-icon__arrow"></i>
-                                </button>
-                            </li>
+                            @foreach ($question->choices as $choice)
+                            <li class="p-quiz-box__answer__item"><button class="p-quiz-box__answer__button js-answer" data-answer="{{$loop->index}}"
+                                data-correct="{{$choice->valid}}">
+                                {{ $choice->name }}<i class="u-icon__arrow"></i>
+                            </button></li>
+                            @endforeach
                         </ul>
                         <div class="p-quiz-box__answer__correct js-answerBox">
                             <p class="p-quiz-box__answer__correct__title   js-answerTitle"></p>
@@ -130,13 +122,18 @@
                             </p>
                         </div>
                     </div>
+                    @unless($question->supplement=='')
                     <cite class="p-quiz-box__note">
                         <i class="u-icon__note"></i>
+                        {{$question->supplement}}
                     </cite>
+                    @endunless
                 </section>
+                @endforeach
             </div>
             <!-- /.l-container .p-quiz-container -->
         </main>
+        {{-- {{$question}} --}}
 
         <div class="p-line">
             <div class="l-container">

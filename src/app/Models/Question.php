@@ -14,7 +14,7 @@ class Question extends Model
     //protected クラス内だけでなく外部からも参照可能
     //⇒別テーブルから操作可能
     protected $guarded = ['created_at', 'updated_at'];
-    public function question()
+    public function choices()
     {
         return $this->hasMany(Choice::class);
     }

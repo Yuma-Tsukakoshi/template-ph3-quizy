@@ -10,8 +10,10 @@ class QuizController extends Controller
     //
     public function index()
     {
-        $question = Question::with('choices')->get();
+        //with ('紐付けたい関数名') をつける
+        $questions = Question::with('choices')->get();
         //入れたい変数の$無しをcompactする↓
-        return view('quiz',compact('question'));
+        // dd($questions);
+        return view('quiz',compact('questions'));
     }
 }

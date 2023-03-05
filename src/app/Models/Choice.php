@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Choice extends Model
 {
     use HasFactory;
-
-    public function choice()
+    public function choices()
     {
         return $this;
     }
