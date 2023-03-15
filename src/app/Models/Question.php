@@ -10,7 +10,8 @@ class Question extends Model
 {
     use HasFactory;
 
-    //modelを別のtableに繋げる　
+    //php artisan make:model ~モデル名 -m でマイグレーションと一緒に作られる
+    //modelを別のtableに繋げる
     //protected クラス内だけでなく外部からも参照可能
     //⇒別テーブルから操作可能
     protected $guarded = ['created_at', 'updated_at'];

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ChoiceController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuizController;
 
@@ -20,6 +22,13 @@ Route::get('/', function () {
 });
 
 Route::get('/quiz', [QuizController::class, 'index'])->name('quiz');
+
+// middleware ログイン後に管理者画面遷移させる
+Route::resource('questions',QuestionController::class)->middleware(['auth', 'verified']);
+
+Route::patch('/questions/question','QuestionController@update');
+
+Route::resource('choices',ChoiceController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

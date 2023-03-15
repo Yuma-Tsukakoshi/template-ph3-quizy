@@ -20,8 +20,8 @@ return new class extends Migration
             $table->id();
             $table->string('content');
             $table->string('image');
-            $table->string('supplement');
-            // $table->string('supplement')->nullable();
+            // $table->string('supplement');
+            $table->string('supplement')->nullable();
             $table->timestamps();
         });
     }
