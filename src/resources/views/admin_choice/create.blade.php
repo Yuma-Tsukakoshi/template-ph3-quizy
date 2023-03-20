@@ -14,26 +14,19 @@
                     {{-- {{追加していく}} --}}
                     <h1>新規作成</h1>
 
-                    <form method="POST" action="{{route('questions.store')}}">
+                    <form method="POST" action="{{route('choices.store',['question_id' => $id])}}" >
                         @csrf
 
                         <div>
-                            <label for="form-content">問題文</label>
-                            <input type="text" name="content" id="form-content" required>
+                            <label for="form-name">選択肢</label>
+                            <input type="text" name="name" id="form-name" required>
                         </div>
 
                         <div>
-                            <label for="form-image">画像</label>
-                            {{-- <input type="file" name="telephone" id="form-tel"> --}}
-                            {{-- TODO fileを画像として挿入 --}}
-                            <input type="text" name="image" id="form-image" required>
+                            <label for="form-valid">正誤</label>
+                            <input type="text" name="valid" id="form-valid" required>
                         </div>
-
-                        <div>
-                            <label for="form-supplement">引用</label>
-                            <input type="text" name="supplement" id="form-supplement">
-                        </div>
-
+                        
                         <button type="submit">登録</button>
                         <a href="{{ route('questions.index') }}">{{ __('一覧へ戻る') }}</a>
                     </form>

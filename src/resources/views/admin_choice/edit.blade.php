@@ -14,29 +14,21 @@
                     {{-- {{追加していく}} --}}
                     <h1>編集</h1>
 
-                    <form method="POST" action="{{route('questions.update',['question' =>$questions->id])}}">
+                    <form method="POST" action="{{route('choices.update',['question_id' => $choice->question_id,'choice'=>$choice->id])}}">
                         @method('PATCH')
                         @csrf
-
                         <div>
-                            問題文
-                            <input type="text" name=content value="{{ $questions->content }}">
+                            選択肢
+                            <input type="text" name="name" value="{{ $choice->name }}">
                         </div>
 
                         <div>
-                            画像
-                            <input type="text" name=image value="{{ $questions->image }}">
+                            正誤
+                            <input type="text" name="valid" value="{{ $choice->valid }}">
                         </div>
-
-                        <div>
-                            引用文
-                            <input type="text" name=supplement value="{{ $questions->supplement }}">
-                        </div>
-
 
                         <input type="submit" value="更新する">
                         <a href="{{route('questions.index')}}">{{ __('詳細に戻る') }}</a>
-
                     </form>
 
                 </div>

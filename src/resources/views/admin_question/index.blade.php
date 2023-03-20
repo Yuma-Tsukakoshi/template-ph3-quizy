@@ -25,7 +25,7 @@
                                 <tr class="py-5">
                                     <td>{{ $question->id }}</td>
                                     <td><a
-                                            href="{{ route('choices.index', ['choice' => $question->id]) }}">{{ $question->content }}</a>
+                                            href="{{ route('choices.index', ['question_id' => $question->id]) }}">{{ $question->content }}</a>
                                     </td>
                                     <td>{{ $question->image }}</td>
                                     <td>{{ $question->supplement }}</td>

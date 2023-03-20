@@ -20,17 +20,16 @@
                                 <th>選択肢</th>
                                 <th>正誤</th>
                             </tr>
-                            @foreach ($question ->choices as $choice)
+                            @foreach ($choices as $choice)
                                 <tr class="py-5">
                                     <td>{{ $choice->question_id }}</td>
                                     <td>{{ $choice->name }}</td>
                                     <td>{{ $choice->valid }}</td>
-                                    <td><a href="{{ route('choices.edit', ['choice' => $choice->id]) }}">{{ __('編集') }}</a>
+                                    <td><a href="{{ route('choices.edit', ['question_id' => $choice->question_id,'choice'=>$choice->id]) }}">{{ __('編集') }}</a>
                                     </td>
-                                    {{-- 選択肢全体を編集するからidいらない！？ --}}
                                     <td>
                                         <form method="POST"
-                                            action="{{ route('choices.destroy', ['choice' => $choice->id]) }}">
+                                            action="{{ route('choices.destroy', ['question_id' => $choice->question_id,'choice'=>$choice->id]) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit">削除</button>
@@ -39,7 +38,7 @@
                                 </tr>
                             @endforeach
                         </table>
-                        <a href="{{ route('choices.create') }}">{{ __('新規作成') }}</a>
+                        <a href="{{ route('choices.create', ['question_id' => $choice->question_id]) }}">{{ __('新規作成') }}</a>
                     </div>
                 </div>
             </div>

@@ -13,12 +13,13 @@ class ChoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($question_id)
     {
         //
-        $choices = Choice::all();
+        $choices = Choice::where('question_id',$question_id)->get();
         // dd($choices);
-        return view('admin_choice.index',compact('choices'));
+        return view('admin_choice.index',compact('choices','question_id'));
+        // editにもquestion_idのパラメータを使える！遷移先で必要か必要でないかでcompactに入れるか決める。
     }
 
     /**
@@ -26,10 +27,11 @@ class ChoiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         //
-        return view('admin_choice.create');
+        // create.blade.php の17行目のidにquestion_idが渡される
+        return view('admin_choice.create',compact('id'));
     }
 
     /**
@@ -38,11 +40,13 @@ class ChoiceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($question_id,Request $request)
     {
+        // urlのパラメータをメソッドの引数で取得する
         //
         $choices = new Choice;
         // $choices->question_id=$request->$question->id;
+        $choices->question_id = $question_id;
         $choices->name=$request->input('name');
         $choices->valid=$request->input('valid');
         
@@ -71,14 +75,13 @@ class ChoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($question_id,$id)
     {
         //
-        $choices=Choice::find($id);
-        // id があやふや
+        $choice=Choice::find($id);
 
         // ×show->edit ●index->edit
-        return view('admin_choice.edit', compact('questions'));
+        return view('admin_choice.edit', compact('choice'));
     }
 
     /**
@@ -88,7 +91,8 @@ class ChoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($question_id,$id,Request $request)
+    // 先に読み込ませたいパラメータを書いてからRequestを書く
     {
         //
         $choices=Choice::find($id);
@@ -109,7 +113,7 @@ class ChoiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($question_id,$id)
     {
         //
         $choices=Choice::find($id);
